@@ -5,6 +5,10 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "../lib/theme";
 import ReduxProvider from "../lib/providers/ReduxProvider";
+import Navbar from "../components/layout/Navbar";
+import Sidebar from "../components/layout/Sidebar";
+import Footer from "../components/layout/Footer";
+import { Box } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +21,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ReduxProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            {children}
+            <Navbar />
+            <Box display="flex">
+              <Sidebar />
+              <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                {children}
+              </Box>
+            </Box>
+            <Footer />
           </ThemeProvider>
         </ReduxProvider>
       </body>
