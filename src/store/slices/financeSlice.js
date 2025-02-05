@@ -1,5 +1,22 @@
 // src/store/slices/financeSlice.js
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+// Define the async thunk
+export const fetchFinanceData = createAsyncThunk(
+  "finance/fetchFinanceData",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch("/api/finance");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const initialState = {
   revenue: 0,
@@ -28,6 +45,23 @@ const financeSlice = createSlice({
     setError(state, action) {
       state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchFinanceData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchFinanceData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.revenue = action.payload.revenue;
+        state.expenses = action.payload.expenses;
+        state.debts = action.payload.debts;
+      })
+      .addCase(fetchFinanceData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
