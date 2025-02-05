@@ -1,54 +1,42 @@
-// src/app/page.tsx
-"use client";
-import Link from "next/link";
 import {
-  Container,
-  Typography,
   Box,
   Card,
   CardContent,
+  Typography,
   Button,
+  Container,
   Stack,
 } from "@mui/material";
+import Link from "next/link";
 
-export default function Home() {
+export default function Page() {
+  const sections = [
+    {
+      title: "Finance",
+      path: "/finance",
+      description: "Track revenue, expenses, and debts.",
+    },
+    {
+      title: "Deliveries",
+      path: "/deliveries",
+      description: "Manage and track deliveries easily.",
+    },
+    {
+      title: "Employees",
+      path: "/employees",
+      description: "Manage employee records and information.",
+    },
+    {
+      title: "Inventory",
+      path: "/inventory",
+      description: "Keep track of inventory levels and stock.",
+    },
+  ];
+
   return (
     <Container>
-      <Typography variant="h3" gutterBottom>
-        Welcome to Magenta
-      </Typography>
-      <Typography variant="h6" gutterBottom>
-        Manage your wholesale business efficiently.
-      </Typography>
-
-      <Stack
-        spacing={3}
-        direction={{ xs: "column", sm: "row" }}
-        flexWrap="wrap"
-        justifyContent="center"
-      >
-        {[
-          {
-            title: "Inventory",
-            path: "/inventory",
-            description: "Manage stock and track updates.",
-          },
-          {
-            title: "Employees",
-            path: "/employees",
-            description: "Monitor employee details and payroll.",
-          },
-          {
-            title: "Finance",
-            path: "/finance",
-            description: "Track revenue, expenses, and debts.",
-          },
-          {
-            title: "Deliveries",
-            path: "/deliveries",
-            description: "Manage and track deliveries easily.",
-          },
-        ].map(({ title, path, description }) => (
+      <Stack direction="row" flexWrap="wrap" justifyContent="space-between">
+        {sections.map(({ title, path, description }) => (
           <Box key={title} width={{ xs: "100%", sm: "45%", md: "22%" }}>
             <Card>
               <CardContent>
@@ -59,7 +47,7 @@ export default function Home() {
                   {description}
                 </Typography>
                 <Link href={path} passHref>
-                  <Button variant="contained" color="primary" component="a">
+                  <Button variant="contained" color="primary">
                     Go to {title}
                   </Button>
                 </Link>
