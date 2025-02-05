@@ -5,8 +5,8 @@ import {
   Typography,
   Button,
   Container,
-  Stack,
 } from "@mui/material";
+import Grid2 from "@mui/material/Grid2";
 import Link from "next/link";
 
 export default function Page() {
@@ -34,11 +34,21 @@ export default function Page() {
   ];
 
   return (
-    <Container>
-      <Stack direction="row" flexWrap="wrap" justifyContent="space-between">
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h3" gutterBottom align="center">
+        Welcome to Magenta Dashboard
+      </Typography>
+      <Grid2 container spacing={3}>
         {sections.map(({ title, path, description }) => (
-          <Box key={title} width={{ xs: "100%", sm: "45%", md: "22%" }}>
-            <Card>
+          <Grid2 key={title} component="div" sx={{ xs: 12, sm: 6, md: 3 }}>
+            <Card
+              sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
               <CardContent>
                 <Typography variant="h5" gutterBottom>
                   {title}
@@ -46,16 +56,18 @@ export default function Page() {
                 <Typography variant="body2" paragraph>
                   {description}
                 </Typography>
+              </CardContent>
+              <Box sx={{ p: 2 }}>
                 <Link href={path} passHref>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" fullWidth>
                     Go to {title}
                   </Button>
                 </Link>
-              </CardContent>
+              </Box>
             </Card>
-          </Box>
+          </Grid2>
         ))}
-      </Stack>
+      </Grid2>
     </Container>
   );
 }

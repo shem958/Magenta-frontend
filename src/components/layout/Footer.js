@@ -1,7 +1,6 @@
 "use client";
 import { Box, Typography, Link, Container } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2"; // Import Grid2
-
+import Grid2 from "@mui/material/Grid2";
 const Footer = () => {
   return (
     <Box sx={{ bgcolor: "#333", color: "#fff", py: 4 }}>
