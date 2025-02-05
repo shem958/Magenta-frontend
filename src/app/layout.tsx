@@ -21,14 +21,29 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ReduxProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Navbar />
-            <Box display="flex">
-              <Sidebar />
-              <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                {children}
+            {/* Flex container for the entire layout */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                minHeight: "100vh",
+              }}
+            >
+              <Navbar />
+              <Box sx={{ display: "flex", flex: 1 }}>
+                <Sidebar />
+                <Box
+                  component="main"
+                  sx={{
+                    flexGrow: 1,
+                    p: 3,
+                  }}
+                >
+                  {children}
+                </Box>
               </Box>
+              <Footer />
             </Box>
-            <Footer />
           </ThemeProvider>
         </ReduxProvider>
       </body>

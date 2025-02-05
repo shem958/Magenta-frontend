@@ -1,9 +1,20 @@
 "use client";
+
 import { Box, Typography, Link, Container } from "@mui/material";
 import Grid2 from "@mui/material/Grid2";
+import { Facebook, Twitter, Instagram } from "@mui/icons-material";
+
 const Footer = () => {
   return (
-    <Box sx={{ bgcolor: "#333", color: "#fff", py: 4 }}>
+    <Box
+      sx={{
+        bgcolor: "#333",
+        color: "#fff",
+        py: 4,
+        mt: "auto",
+        width: "100%",
+      }}
+    >
       <Container maxWidth="lg">
         <Grid2 container spacing={4}>
           <Grid2 xs={12} sm={4}>
@@ -34,17 +45,29 @@ const Footer = () => {
             <Typography variant="h6" gutterBottom>
               Follow Us
             </Typography>
-            <Link href="https://facebook.com" color="inherit" underline="none">
-              Facebook
-            </Link>
-            <br />
-            <Link href="https://twitter.com" color="inherit" underline="none">
-              Twitter
-            </Link>
-            <br />
-            <Link href="https://instagram.com" color="inherit" underline="none">
-              Instagram
-            </Link>
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <Link
+                href="https://facebook.com"
+                color="inherit"
+                aria-label="Facebook"
+              >
+                <Facebook />
+              </Link>
+              <Link
+                href="https://twitter.com"
+                color="inherit"
+                aria-label="Twitter"
+              >
+                <Twitter />
+              </Link>
+              <Link
+                href="https://instagram.com"
+                color="inherit"
+                aria-label="Instagram"
+              >
+                <Instagram />
+              </Link>
+            </Box>
           </Grid2>
         </Grid2>
       </Container>
