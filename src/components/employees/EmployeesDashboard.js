@@ -2,7 +2,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEmployees } from "../../store/slices/employeesSlice";
-import { Container, Typography } from "@mui/material";
+import {
+  Container,
+  Typography,
+  CircularProgress,
+  Box,
+  Paper,
+} from "@mui/material";
 import EmployeesList from "./EmployeesList";
 
 const EmployeesDashboard = () => {
@@ -15,14 +21,27 @@ const EmployeesDashboard = () => {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
-        Employee Management
-      </Typography>
-      {loading ? (
-        <Typography>Loading...</Typography>
-      ) : (
-        <EmployeesList employees={employees} />
-      )}
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Employee Management
+        </Typography>
+        {loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "50vh",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Paper elevation={3} sx={{ p: 2 }}>
+            <EmployeesList employees={employees} />
+          </Paper>
+        )}
+      </Box>
     </Container>
   );
 };
