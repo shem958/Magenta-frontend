@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFinanceData } from "../../redux/slices/financeSlice";
+import { fetchFinanceData } from "../../store/slices/financeSlice";
 import { Container, Typography } from "@mui/material";
 import FinanceSummary from "./FinanceSummary";
 
