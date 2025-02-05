@@ -2,7 +2,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFinanceData } from "../../store/slices/financeSlice";
-import { Container, Typography } from "@mui/material";
+import {
+  Container,
+  Typography,
+  CircularProgress,
+  Box,
+  Paper,
+} from "@mui/material";
 import FinanceSummary from "./FinanceSummary";
 
 const FinanceDashboard = () => {
@@ -15,14 +21,27 @@ const FinanceDashboard = () => {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
-        Finance Overview
-      </Typography>
-      {loading ? (
-        <Typography>Loading...</Typography>
-      ) : (
-        <FinanceSummary data={data} />
-      )}
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Finance Overview
+        </Typography>
+        {loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "50vh",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Paper elevation={3} sx={{ p: 2 }}>
+            <FinanceSummary data={data} />
+          </Paper>
+        )}
+      </Box>
     </Container>
   );
 };
