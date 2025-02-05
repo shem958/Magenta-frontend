@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchEmployees } from "../../redux/slices/employeesSlice";
+import { fetchEmployees } from "../../store/slices/employeesSlice";
 import { Container, Typography } from "@mui/material";
 import EmployeesList from "./EmployeesList";
 
