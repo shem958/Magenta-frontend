@@ -1,4 +1,3 @@
-// Homepage component
 import {
   Box,
   Card,
@@ -6,10 +5,11 @@ import {
   Typography,
   Button,
   Container,
-  Grid,
+  Avatar,
   IconButton,
   Chip,
   useTheme,
+  Grid,
 } from "@mui/material";
 import {
   TrendingUp,
@@ -17,6 +17,8 @@ import {
   People,
   Inventory,
   ArrowForward,
+  AccountCircle,
+  Notifications,
 } from "@mui/icons-material";
 import Link from "next/link";
 
@@ -43,97 +45,102 @@ const StatCard = ({ value, label, change }: StatCardProps) => (
   </Box>
 );
 
-export default function Dashboard() {
+export default function Page() {
   const theme = useTheme();
-
   const sections = [
     {
       title: "Finance",
       path: "/finance",
-      description: "Track revenue, expenses, and debts",
+      description: "Track revenue, expenses, and debts.",
       icon: <TrendingUp />,
       stats: { value: "$45,289", label: "Monthly Revenue", change: 12.3 },
     },
     {
       title: "Deliveries",
       path: "/deliveries",
-      description: "Manage and track deliveries in real-time",
+      description: "Manage and track deliveries easily.",
       icon: <LocalShipping />,
       stats: { value: "1,234", label: "Active Deliveries", change: -2.5 },
     },
     {
       title: "Employees",
       path: "/employees",
-      description: "Manage employee records and performance",
+      description: "Manage employee records and information.",
       icon: <People />,
       stats: { value: "89", label: "Active Employees", change: 5.7 },
     },
     {
       title: "Inventory",
       path: "/inventory",
-      description: "Monitor stock levels and movements",
+      description: "Keep track of inventory levels and stock.",
       icon: <Inventory />,
-      stats: { value: "3,456", label: "Items in Stock", change: 8.2 },
+      stats: { value: "3,456", label: "Items in Stock", change: 3.2 },
     },
   ];
 
   return (
-    <Container maxWidth="xl" sx={{ mt: 4, mb: 8 }}>
-      <Box sx={{ mb: 6 }}>
-        <Typography variant="h4" fontWeight="bold" gutterBottom>
+    <Container sx={{ mt: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 4,
+        }}
+      >
+        <Typography variant="h3" gutterBottom>
           Dashboard Overview
         </Typography>
-        <Typography color="text.secondary">
-          Welcome back! Here&apos;s what&apos;s happening today.
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <IconButton color="inherit">
+            <Notifications />
+          </IconButton>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+        </Box>
       </Box>
-
       <Grid container spacing={3}>
         {sections.map(({ title, path, description, icon, stats }) => (
-          <Grid item xs={12} sm={6} md={3} key={title}>
+          <Grid key={title} xs={12} sm={6} md={4} lg={3} item>
             <Card
               sx={{
                 height: "100%",
-                transition: "transform 0.2s",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: theme.shadows[8],
-                },
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
               }}
             >
               <CardContent>
-                <Box sx={{ mb: 2, display: "flex", alignItems: "center" }}>
-                  <IconButton
-                    sx={{
-                      bgcolor: theme.palette.primary.main,
-                      color: "white",
-                      "&:hover": { bgcolor: theme.palette.primary.dark },
-                    }}
-                  >
+                <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                  <Avatar sx={{ bgcolor: theme.palette.primary.main, mr: 2 }}>
                     {icon}
-                  </IconButton>
-                  <Typography variant="h6" sx={{ ml: 1 }}>
+                  </Avatar>
+                  <Typography variant="h5" gutterBottom>
                     {title}
                   </Typography>
                 </Box>
-
-                <StatCard {...stats} />
-
-                <Typography color="text.secondary" sx={{ mb: 2 }}>
+                <Typography variant="body2" paragraph>
                   {description}
                 </Typography>
-
-                <Link href={path} passHref style={{ textDecoration: "none" }}>
+                <StatCard
+                  value={stats.value}
+                  label={stats.label}
+                  change={stats.change}
+                />
+              </CardContent>
+              <Box sx={{ p: 2 }}>
+                <Link href={path} passHref>
                   <Button
                     variant="contained"
-                    endIcon={<ArrowForward />}
+                    color="primary"
                     fullWidth
-                    sx={{ mt: 2 }}
+                    endIcon={<ArrowForward />}
                   >
                     View Details
                   </Button>
                 </Link>
-              </CardContent>
+              </Box>
             </Card>
           </Grid>
         ))}
