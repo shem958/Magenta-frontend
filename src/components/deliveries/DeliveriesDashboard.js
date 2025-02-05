@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDeliveries } from "../../redux/slices/deliveriesSlice";
+import { fetchDeliveries } from "../../store/slices/deliveriesSlice";
 import { Container, Typography } from "@mui/material";
 import DeliveriesList from "./DeliveriesList";
 
