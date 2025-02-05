@@ -6,7 +6,6 @@ import {
   Button,
   Container,
 } from "@mui/material";
-import Grid2 from "@mui/material/Grid2";
 import Link from "next/link";
 
 export default function Page() {
@@ -38,36 +37,47 @@ export default function Page() {
       <Typography variant="h3" gutterBottom align="center">
         Welcome to Magenta Dashboard
       </Typography>
-      <Grid2 container spacing={3}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr", // 1 column for small screens
+            sm: "repeat(2, 1fr)", // 2 columns for medium screens
+            md: "repeat(3, 1fr)", // 3 columns for larger screens
+            lg: "repeat(4, 1fr)", // 4 columns for extra-large screens
+          },
+          gap: 3, // spacing between items
+          mt: 4,
+        }}
+      >
         {sections.map(({ title, path, description }) => (
-          <Grid2 key={title} component="div" sx={{ xs: 12, sm: 6, md: 3 }}>
-            <Card
-              sx={{
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
-              <CardContent>
-                <Typography variant="h5" gutterBottom>
-                  {title}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  {description}
-                </Typography>
-              </CardContent>
-              <Box sx={{ p: 2 }}>
-                <Link href={path} passHref>
-                  <Button variant="contained" color="primary" fullWidth>
-                    Go to {title}
-                  </Button>
-                </Link>
-              </Box>
-            </Card>
-          </Grid2>
+          <Card
+            key={title}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "100%",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h5" gutterBottom>
+                {title}
+              </Typography>
+              <Typography variant="body2" paragraph>
+                {description}
+              </Typography>
+            </CardContent>
+            <Box sx={{ p: 2 }}>
+              <Link href={path} passHref>
+                <Button variant="contained" color="primary" fullWidth>
+                  Go to {title}
+                </Button>
+              </Link>
+            </Box>
+          </Card>
         ))}
-      </Grid2>
+      </Box>
     </Container>
   );
 }
