@@ -57,14 +57,11 @@ export default function Home() {
                 <Typography variant="body2" paragraph>
                   {description}
                 </Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component={Link}
-                  href={path}
-                >
-                  Go to {title}
-                </Button>
+                <Link href={path} passHref>
+                  <Button variant="contained" color="primary">
+                    Go to {title}
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           </Box>
