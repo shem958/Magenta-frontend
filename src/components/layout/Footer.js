@@ -1,7 +1,6 @@
 "use client";
 
-import { Box, Typography, Link, Container } from "@mui/material";
-import Grid2 from "@mui/material/Grid2";
+import { Box, Typography, Link, Container, Grid } from "@mui/material";
 import { Facebook, Twitter, Instagram } from "@mui/icons-material";
 
 const Footer = () => {
@@ -16,16 +15,16 @@ const Footer = () => {
       }}
     >
       <Container maxWidth="lg">
-        <Grid2 container spacing={4}>
-          <Grid2 xs={12} sm={4}>
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
               Magenta
             </Typography>
             <Typography variant="body2">
               &copy; {new Date().getFullYear()} Magenta. All rights reserved.
             </Typography>
-          </Grid2>
-          <Grid2 xs={12} sm={4}>
+          </Grid>
+          <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
               Quick Links
             </Typography>
@@ -40,8 +39,8 @@ const Footer = () => {
             <Link href="/privacy" color="inherit" underline="none">
               Privacy Policy
             </Link>
-          </Grid2>
-          <Grid2 xs={12} sm={4}>
+          </Grid>
+          <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
               Follow Us
             </Typography>
@@ -68,8 +67,8 @@ const Footer = () => {
                 <Instagram />
               </Link>
             </Box>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );
