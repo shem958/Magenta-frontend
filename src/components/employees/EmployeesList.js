@@ -2,7 +2,7 @@
 import { List, ListItem, ListItemText, Paper } from "@mui/material";
 import Link from "next/link";
 
-const EmployeesList = ({ employees }) => {
+const EmployeesList = ({ employees = [] }) => {
   return (
     <Paper>
       <List>
@@ -10,13 +10,10 @@ const EmployeesList = ({ employees }) => {
           <ListItem
             button
             component={Link}
-            href={`/employees/${employee._id}`}
-            key={employee._id}
+            key={employee.id}
+            href={`/employees/${employee.id}`}
           >
-            <ListItemText
-              primary={employee.name}
-              secondary={`Position: ${employee.position}`}
-            />
+            <ListItemText primary={employee.name} />
           </ListItem>
         ))}
       </List>
