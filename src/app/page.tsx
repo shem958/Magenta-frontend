@@ -53,7 +53,7 @@ export default function Page() {
                 <Typography variant="h5" gutterBottom>
                   {title}
                 </Typography>
-                <Typography variant="body2" paragraph>
+                <Typography variant="body2" component="p">
                   {description}
                 </Typography>
               </CardContent>
