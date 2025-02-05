@@ -2,7 +2,7 @@
 "use client";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchInventory } from "../../redux/slices/inventorySlice";
+import { fetchInventory } from "../../store/slices/inventorySlice";
 import { Container, Typography } from "@mui/material";
 import InventoryList from "./InventoryList";
 
