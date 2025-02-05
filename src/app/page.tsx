@@ -1,3 +1,4 @@
+// src/app/page.tsx
 "use client";
 import Link from "next/link";
 import {
@@ -58,7 +59,7 @@ export default function Home() {
                   {description}
                 </Typography>
                 <Link href={path} passHref>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" component="a">
                     Go to {title}
                   </Button>
                 </Link>
