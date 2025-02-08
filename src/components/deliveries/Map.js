@@ -1,17 +1,23 @@
+import dynamic from "next/dynamic";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-
-// Fix the default icon issue with Leaflet
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
-});
+import { useEffect } from "react";
 
 const Map = ({ deliveries }) => {
+  useEffect(() => {
+    import("leaflet").then((L) => {
+      // Fix the default icon issue with Leaflet
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl:
+          "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
+        iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+        shadowUrl:
+          "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+      });
+    });
+  }, []);
+
   return (
     <MapContainer
       center={[51.505, -0.09]}
@@ -36,4 +42,5 @@ const Map = ({ deliveries }) => {
   );
 };
 
-export default Map;
+// Dynamically import the Map component to ensure it is only rendered on the client side
+export default dynamic(() => Promise.resolve(Map), { ssr: false });
