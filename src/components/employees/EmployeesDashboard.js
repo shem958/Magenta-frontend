@@ -15,7 +15,7 @@ import EmployeesList from "./EmployeesList";
 
 const EmployeesDashboard = () => {
   const dispatch = useDispatch();
-  const { employees, loading } = useSelector((state) => state.employees);
+  const { employees = [], loading } = useSelector((state) => state.employees);
 
   useEffect(() => {
     dispatch(fetchEmployees());
