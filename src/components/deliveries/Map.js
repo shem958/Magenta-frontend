@@ -1,9 +1,9 @@
+"use client";
 import dynamic from "next/dynamic";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import { useEffect } from "react";
+import "leaflet/dist/leaflet.css";
 
-const Map = ({ deliveries }) => {
+const Map = ({ deliveries = [] }) => {
   useEffect(() => {
     import("leaflet").then((L) => {
       // Fix the default icon issue with Leaflet
@@ -18,6 +18,23 @@ const Map = ({ deliveries }) => {
     });
   }, []);
 
+  const MapContainer = dynamic(
+    () => import("react-leaflet").then((mod) => mod.MapContainer),
+    { ssr: false }
+  );
+  const TileLayer = dynamic(
+    () => import("react-leaflet").then((mod) => mod.TileLayer),
+    { ssr: false }
+  );
+  const Marker = dynamic(
+    () => import("react-leaflet").then((mod) => mod.Marker),
+    { ssr: false }
+  );
+  const Popup = dynamic(
+    () => import("react-leaflet").then((mod) => mod.Popup),
+    { ssr: false }
+  );
+
   return (
     <MapContainer
       center={[51.505, -0.09]}
@@ -28,19 +45,19 @@ const Map = ({ deliveries }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {deliveries.map((delivery) => (
-        <Marker
-          key={delivery.id}
-          position={[delivery.location.lat, delivery.location.lng]}
-        >
-          <Popup>
-            {delivery.name} <br /> {delivery.status}
-          </Popup>
-        </Marker>
-      ))}
+      {Array.isArray(deliveries) &&
+        deliveries.map((delivery) => (
+          <Marker
+            key={delivery.id}
+            position={[delivery.location.lat, delivery.location.lng]}
+          >
+            <Popup>
+              {delivery.name} <br /> {delivery.status}
+            </Popup>
+          </Marker>
+        ))}
     </MapContainer>
   );
 };
 
-// Dynamically import the Map component to ensure it is only rendered on the client side
 export default dynamic(() => Promise.resolve(Map), { ssr: false });
