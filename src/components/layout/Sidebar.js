@@ -2,7 +2,7 @@
 import {
   Drawer,
   List,
-  ListItem,
+  ListItemButton,
   ListItemText,
   ListItemIcon,
   Typography,
@@ -52,7 +52,7 @@ const Sidebar = () => {
         />
       </Box>
       <List>
-        <ListItem button onClick={handleToggle}>
+        <ListItemButton onClick={handleToggle}>
           <ListItemIcon sx={{ color: "#fff" }}>
             <DashboardIcon />
           </ListItemIcon>
@@ -62,21 +62,21 @@ const Sidebar = () => {
           ) : (
             <ExpandMore sx={{ color: "#fff" }} />
           )}
-        </ListItem>
+        </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button sx={{ pl: 4 }}>
+            <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon sx={{ color: "#fff" }}>
                 <InventoryIcon />
               </ListItemIcon>
               <ListItemText primary="Inventory" />
-            </ListItem>
-            <ListItem button sx={{ pl: 4 }}>
+            </ListItemButton>
+            <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon sx={{ color: "#fff" }}>
                 <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary="Employees" />
-            </ListItem>
+            </ListItemButton>
           </List>
         </Collapse>
       </List>
