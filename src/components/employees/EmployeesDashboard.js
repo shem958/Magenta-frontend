@@ -31,11 +31,9 @@ const EmployeesDashboard = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const {
-    list: employees = [],
-    loading,
-    error,
-  } = useSelector((state) => state.employees);
+  const { list, loading, error } = useSelector((state) => state.employees);
+
+  const employees = Array.isArray(list) ? list : [];
 
   const handleRetry = () => {
     dispatch(fetchEmployees());
@@ -46,25 +44,49 @@ const EmployeesDashboard = () => {
   }, [dispatch]);
 
   const totalEmployees = employees.length;
-  const departments = [...new Set(employees.map((emp) => emp.department).filter(Boolean))];
-  const activeEmployees = employees.filter((emp) => emp.status === "Active").length;
+  const departments = [
+    ...new Set(employees.map((emp) => emp.department).filter(Boolean)),
+  ];
+  const activeEmployees = employees.filter(
+    (emp) => emp.status === "Active",
+  ).length;
   const newHiresThisMonth = employees.filter(
-    (emp) => new Date(emp.hireDate).getMonth() === new Date().getMonth()
+    (emp) => new Date(emp.hireDate).getMonth() === new Date().getMonth(),
   ).length;
   const attendanceRate = 95;
 
   const quickActions = [
     { label: "Add Employee", icon: <AddIcon />, color: "primary" },
-    { label: "Generate Reports", icon: <AssessmentOutlinedIcon />, color: "secondary" },
-    { label: "Schedule Reviews", icon: <EventNoteOutlinedIcon />, color: "info" },
-    { label: "Approve Requests", icon: <CheckCircleOutlineIcon />, color: "success" },
+    {
+      label: "Generate Reports",
+      icon: <AssessmentOutlinedIcon />,
+      color: "secondary",
+    },
+    {
+      label: "Schedule Reviews",
+      icon: <EventNoteOutlinedIcon />,
+      color: "info",
+    },
+    {
+      label: "Approve Requests",
+      icon: <CheckCircleOutlineIcon />,
+      color: "success",
+    },
   ];
 
   return (
     <Box className="page-transition">
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1, flexWrap: "wrap" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            mb: 1,
+            flexWrap: "wrap",
+          }}
+        >
           <Typography variant="h4" sx={{ fontWeight: 700 }}>
             Employee Management
           </Typography>
@@ -189,7 +211,9 @@ const EmployeesDashboard = () => {
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
                 {departments.length > 0 ? (
                   departments.slice(0, 5).map((dept, index) => {
-                    const deptEmployees = employees.filter((e) => e.department === dept);
+                    const deptEmployees = employees.filter(
+                      (e) => e.department === dept,
+                    );
                     return (
                       <Box
                         key={index}
@@ -203,7 +227,13 @@ const EmployeesDashboard = () => {
                           "&:hover": { bgcolor: "grey.100" },
                         }}
                       >
-                        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1.5,
+                          }}
+                        >
                           <Avatar
                             sx={{
                               width: 32,
@@ -247,13 +277,32 @@ const EmployeesDashboard = () => {
                 height: "100%",
               }}
             >
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                   Team Overview
                 </Typography>
-                <AvatarGroup max={5} sx={{ "& .MuiAvatar-root": { width: 32, height: 32, fontSize: 14 } }}>
+                <AvatarGroup
+                  max={5}
+                  sx={{
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      fontSize: 14,
+                    },
+                  }}
+                >
                   {employees.slice(0, 6).map((emp, index) => (
-                    <Avatar key={index} sx={{ bgcolor: `hsl(${index * 50}, 60%, 50%)` }}>
+                    <Avatar
+                      key={index}
+                      sx={{ bgcolor: `hsl(${index * 50}, 60%, 50%)` }}
+                    >
                       {emp.name?.charAt(0) || "?"}
                     </Avatar>
                   ))}
@@ -261,27 +310,78 @@ const EmployeesDashboard = () => {
               </Box>
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={3}>
-                  <Box sx={{ textAlign: "center", p: 2, bgcolor: "primary.light", borderRadius: 2, color: "#fff" }}>
-                    <Typography variant="h5" fontWeight={700}>{totalEmployees}</Typography>
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      p: 2,
+                      bgcolor: "primary.light",
+                      borderRadius: 2,
+                      color: "#fff",
+                    }}
+                  >
+                    <Typography variant="h5" fontWeight={700}>
+                      {totalEmployees}
+                    </Typography>
                     <Typography variant="caption">Total</Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={6} sm={3}>
-                  <Box sx={{ textAlign: "center", p: 2, bgcolor: "success.light", borderRadius: 2 }}>
-                    <Typography variant="h5" fontWeight={700} color="success.dark">{activeEmployees}</Typography>
-                    <Typography variant="caption" color="success.dark">Active</Typography>
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      p: 2,
+                      bgcolor: "success.light",
+                      borderRadius: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      fontWeight={700}
+                      color="success.dark"
+                    >
+                      {activeEmployees}
+                    </Typography>
+                    <Typography variant="caption" color="success.dark">
+                      Active
+                    </Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={6} sm={3}>
-                  <Box sx={{ textAlign: "center", p: 2, bgcolor: "info.light", borderRadius: 2 }}>
-                    <Typography variant="h5" fontWeight={700} color="info.dark">{newHiresThisMonth}</Typography>
-                    <Typography variant="caption" color="info.dark">New Hires</Typography>
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      p: 2,
+                      bgcolor: "info.light",
+                      borderRadius: 2,
+                    }}
+                  >
+                    <Typography variant="h5" fontWeight={700} color="info.dark">
+                      {newHiresThisMonth}
+                    </Typography>
+                    <Typography variant="caption" color="info.dark">
+                      New Hires
+                    </Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={6} sm={3}>
-                  <Box sx={{ textAlign: "center", p: 2, bgcolor: "warning.light", borderRadius: 2 }}>
-                    <Typography variant="h5" fontWeight={700} color="warning.dark">{departments.length}</Typography>
-                    <Typography variant="caption" color="warning.dark">Departments</Typography>
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      p: 2,
+                      bgcolor: "warning.light",
+                      borderRadius: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      fontWeight={700}
+                      color="warning.dark"
+                    >
+                      {departments.length}
+                    </Typography>
+                    <Typography variant="caption" color="warning.dark">
+                      Departments
+                    </Typography>
                   </Box>
                 </Grid>
               </Grid>
