@@ -1,19 +1,48 @@
 // src/store/slices/financeSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../lib/api";
 
-// Define the async thunk
+// Fetch finance overview data
 export const fetchFinanceData = createAsyncThunk(
   "finance/fetchFinanceData",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch("/api/finance");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      return data;
+      const response = await api.get("/finance");
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch finance data"
+      );
+    }
+  }
+);
+
+// Fetch transactions
+export const fetchTransactions = createAsyncThunk(
+  "finance/fetchTransactions",
+  async (params, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/finance/transactions", { params });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch transactions"
+      );
+    }
+  }
+);
+
+// Create transaction
+export const createTransaction = createAsyncThunk(
+  "finance/createTransaction",
+  async (transactionData, { rejectWithValue }) => {
+    try {
+      const response = await api.post("/finance/transactions", transactionData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to create transaction"
+      );
     }
   }
 );
