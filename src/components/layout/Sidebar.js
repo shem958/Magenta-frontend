@@ -34,35 +34,35 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 const DRAWER_WIDTH = 280;
 
 const menuItems = [
-  { 
-    title: "Dashboard", 
-    icon: <DashboardIcon />, 
+  {
+    title: "Dashboard",
+    icon: <DashboardIcon />,
     path: "/",
-    description: "Overview & Analytics"
+    description: "Overview & Analytics",
   },
-  { 
-    title: "Inventory", 
-    icon: <InventoryIcon />, 
+  {
+    title: "Inventory",
+    icon: <InventoryIcon />,
     path: "/inventory",
-    description: "Stock Management"
+    description: "Stock Management",
   },
-  { 
-    title: "Employees", 
-    icon: <PeopleIcon />, 
+  {
+    title: "Employees",
+    icon: <PeopleIcon />,
     path: "/employees",
-    description: "Team Management"
+    description: "Team Management",
   },
-  { 
-    title: "Deliveries", 
-    icon: <LocalShippingIcon />, 
+  {
+    title: "Deliveries",
+    icon: <LocalShippingIcon />,
     path: "/deliveries",
-    description: "Shipping & Logistics"
+    description: "Shipping & Logistics",
   },
-  { 
-    title: "Finance", 
-    icon: <AccountBalanceWalletIcon />, 
+  {
+    title: "Finance",
+    icon: <AccountBalanceWalletIcon />,
     path: "/finance",
-    description: "Revenue & Expenses"
+    description: "Revenue & Expenses",
   },
 ];
 
@@ -79,7 +79,7 @@ const Sidebar = ({ mobileOpen, onMobileClose }) => {
   const filteredMenuItems = menuItems.filter(
     (item) =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      item.description.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const drawerContent = (
@@ -203,7 +203,11 @@ const Sidebar = ({ mobileOpen, onMobileClose }) => {
               placement="right"
               arrow
             >
-              <Link href={item.path} passHref style={{ textDecoration: "none" }}>
+              <Link
+                href={item.path}
+                passHref
+                style={{ textDecoration: "none" }}
+              >
                 <ListItemButton
                   selected={selectedPath === item.path}
                   onClick={() => {
@@ -339,7 +343,5 @@ const Sidebar = ({ mobileOpen, onMobileClose }) => {
     </>
   );
 };
-
-export default Sidebar;
 
 export default Sidebar;
