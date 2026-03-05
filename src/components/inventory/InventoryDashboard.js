@@ -13,6 +13,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import ErrorAlert from "../common/ErrorAlert";
 import InventoryList from "./InventoryList";
 import {
   LineChart,
@@ -27,7 +28,11 @@ import {
 
 const InventoryDashboard = () => {
   const dispatch = useDispatch();
-  const { items, loading } = useSelector((state) => state.inventory);
+  const { items, loading, error } = useSelector((state) => state.inventory);
+
+  const handleRetry = () => {
+    dispatch(fetchInventory());
+  };
 
   useEffect(() => {
     dispatch(fetchInventory());
@@ -35,10 +40,10 @@ const InventoryDashboard = () => {
 
   const totalInventoryValue = items.reduce((acc, item) => acc + item.value, 0);
   const lowStockAlerts = items.filter(
-    (item) => item.stock < item.reorderLevel
+    (item) => item.stock < item.reorderLevel,
   ).length;
   const itemsNeedingReorder = items.filter(
-    (item) => item.stock < item.reorderLevel
+    (item) => item.stock < item.reorderLevel,
   );
   const topSellingItems = items.sort((a, b) => b.sales - a.sales).slice(0, 5);
   const recentTransactions = items.slice(-5); // Example static value
@@ -68,6 +73,11 @@ const InventoryDashboard = () => {
         <Typography variant="h4" gutterBottom>
           Inventory Management
         </Typography>
+        <ErrorAlert
+          error={error}
+          onRetry={handleRetry}
+          title="Failed to load inventory"
+        />
         {loading ? (
           <Box
             sx={{

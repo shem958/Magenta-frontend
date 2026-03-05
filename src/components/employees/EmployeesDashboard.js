@@ -11,11 +11,20 @@ import {
   Grid,
   Button,
 } from "@mui/material";
+import ErrorAlert from "../common/ErrorAlert";
 import EmployeesList from "./EmployeesList";
 
 const EmployeesDashboard = () => {
   const dispatch = useDispatch();
-  const { employees = [], loading } = useSelector((state) => state.employees);
+  const {
+    list: employees = [],
+    loading,
+    error,
+  } = useSelector((state) => state.employees);
+
+  const handleRetry = () => {
+    dispatch(fetchEmployees());
+  };
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -24,16 +33,16 @@ const EmployeesDashboard = () => {
   const totalEmployees = employees.length;
   const departments = [...new Set(employees.map((emp) => emp.department))];
   const activeEmployees = employees.filter(
-    (emp) => emp.status === "Active"
+    (emp) => emp.status === "Active",
   ).length;
   const inactiveEmployees = employees.filter(
-    (emp) => emp.status === "Inactive"
+    (emp) => emp.status === "Inactive",
   ).length;
   const newHiresThisMonth = employees.filter(
-    (emp) => new Date(emp.hireDate).getMonth() === new Date().getMonth()
+    (emp) => new Date(emp.hireDate).getMonth() === new Date().getMonth(),
   ).length;
   const upcomingBirthdays = employees.filter(
-    (emp) => new Date(emp.birthDate).getMonth() === new Date().getMonth()
+    (emp) => new Date(emp.birthDate).getMonth() === new Date().getMonth(),
   );
   const attendanceRate = 95; // Example static value
   const performanceMetrics = { averageRating: 4.2 }; // Example static value
@@ -44,6 +53,11 @@ const EmployeesDashboard = () => {
         <Typography variant="h4" gutterBottom>
           Employee Management
         </Typography>
+        <ErrorAlert
+          error={error}
+          onRetry={handleRetry}
+          title="Failed to load employees"
+        />
         {loading ? (
           <Box
             sx={{

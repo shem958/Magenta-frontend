@@ -11,6 +11,7 @@ import {
   Grid,
   Button,
 } from "@mui/material";
+import ErrorAlert from "../common/ErrorAlert";
 import FinanceSummary from "./FinanceSummary";
 import {
   LineChart,
@@ -25,7 +26,11 @@ import {
 
 const FinanceDashboard = () => {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.finance);
+  const { loading, error } = useSelector((state) => state.finance);
+
+  const handleRetry = () => {
+    dispatch(fetchFinanceData());
+  };
 
   useEffect(() => {
     dispatch(fetchFinanceData());
@@ -67,6 +72,11 @@ const FinanceDashboard = () => {
         <Typography variant="h4" gutterBottom>
           Finance Overview
         </Typography>
+        <ErrorAlert
+          error={error}
+          onRetry={handleRetry}
+          title="Failed to load finance data"
+        />
         {loading ? (
           <Box
             sx={{
@@ -145,15 +155,15 @@ const FinanceDashboard = () => {
                               kpi.trend === "up"
                                 ? "green"
                                 : kpi.trend === "down"
-                                ? "red"
-                                : "gray"
+                                  ? "red"
+                                  : "gray"
                             }
                           >
                             {kpi.trend === "up"
                               ? "↑"
                               : kpi.trend === "down"
-                              ? "↓"
-                              : "→"}
+                                ? "↓"
+                                : "→"}
                           </Typography>
                         </Box>
                       </Grid>

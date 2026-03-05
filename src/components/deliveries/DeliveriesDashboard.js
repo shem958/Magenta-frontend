@@ -11,6 +11,7 @@ import {
   Grid,
   Button,
 } from "@mui/material";
+import ErrorAlert from "../common/ErrorAlert";
 import DeliveriesList from "./DeliveriesList";
 import {
   LineChart,
@@ -26,7 +27,15 @@ import Map from "./Map"; // Import the Map component
 
 const DeliveriesDashboard = () => {
   const dispatch = useDispatch();
-  const { deliveries, loading } = useSelector((state) => state.deliveries);
+  const {
+    orders: deliveries,
+    loading,
+    error,
+  } = useSelector((state) => state.deliveries);
+
+  const handleRetry = () => {
+    dispatch(fetchDeliveries());
+  };
 
   useEffect(() => {
     dispatch(fetchDeliveries());
@@ -55,6 +64,11 @@ const DeliveriesDashboard = () => {
         <Typography variant="h4" gutterBottom>
           Deliveries Overview
         </Typography>
+        <ErrorAlert
+          error={error}
+          onRetry={handleRetry}
+          title="Failed to load deliveries"
+        />
         {loading ? (
           <Box
             sx={{
