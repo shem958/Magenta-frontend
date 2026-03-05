@@ -8,19 +8,19 @@ export const login = createAsyncThunk(
     try {
       const response = await api.post("/auth/login", credentials);
       const { token, user } = response.data;
-      
+
       // Store token in localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('token', token);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", token);
       }
-      
+
       return { token, user };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Login failed. Please try again."
+        error.response?.data?.message || "Login failed. Please try again.",
       );
     }
-  }
+  },
 );
 
 // Register thunk
@@ -32,16 +32,17 @@ export const register = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Registration failed. Please try again."
+        error.response?.data?.message ||
+          "Registration failed. Please try again.",
       );
     }
-  }
+  },
 );
 
 // Logout thunk
 export const logout = createAsyncThunk("auth/logout", async () => {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('token');
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token");
   }
   return null;
 });
@@ -51,27 +52,28 @@ export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { rejectWithValue }) => {
     try {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
       if (!token) {
         return rejectWithValue("No token found");
       }
-      
+
       const response = await api.get("/auth/me");
       return { token, user: response.data };
     } catch (error) {
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('token');
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("token");
       }
       return rejectWithValue(
-        error.response?.data?.message || "Authentication check failed"
+        error.response?.data?.message || "Authentication check failed",
       );
     }
-  }
+  },
 );
 
 const initialState = {
   user: null,
-  token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
+  token: typeof window !== "undefined" ? localStorage.getItem("token") : null,
   isAuthenticated: false,
   loading: false,
   error: null,

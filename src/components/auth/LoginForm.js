@@ -18,7 +18,9 @@ import { useEffect } from "react";
 
 const LoginForm = ({ onSuccess }) => {
   const dispatch = useDispatch();
-  const { loading, error, isAuthenticated } = useSelector((state) => state.auth);
+  const { loading, error, isAuthenticated } = useSelector(
+    (state) => state.auth,
+  );
 
   const {
     register,
