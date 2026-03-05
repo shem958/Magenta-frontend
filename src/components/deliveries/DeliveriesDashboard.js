@@ -46,10 +46,12 @@ const DeliveriesDashboard = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const {
-    orders: deliveries = [],
+    orders,
     loading,
     error,
   } = useSelector((state) => state.deliveries);
+
+  const deliveries = Array.isArray(orders) ? orders : [];
 
   const handleRetry = () => {
     dispatch(fetchDeliveries());
@@ -63,8 +65,10 @@ const DeliveriesDashboard = () => {
 
   // Calculate stats from actual data
   const totalDeliveries = deliveries.length;
-  const inTransit = deliveries.filter((d) => d.status === "In Transit").length || 10;
-  const completed = deliveries.filter((d) => d.status === "Completed").length || 20;
+  const inTransit =
+    deliveries.filter((d) => d.status === "In Transit").length || 10;
+  const completed =
+    deliveries.filter((d) => d.status === "Completed").length || 20;
   const delayed = deliveries.filter((d) => d.status === "Delayed").length || 5;
 
   const deliveryStatusData = [
@@ -93,7 +97,15 @@ const DeliveriesDashboard = () => {
     <Box className="page-transition">
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1, flexWrap: "wrap" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            mb: 1,
+            flexWrap: "wrap",
+          }}
+        >
           <Typography variant="h4" sx={{ fontWeight: 700 }}>
             Deliveries Overview
           </Typography>
@@ -181,7 +193,13 @@ const DeliveriesDashboard = () => {
               <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
                 Active Deliveries Map
               </Typography>
-              <Box sx={{ height: { xs: 300, md: 350 }, borderRadius: 2, overflow: "hidden" }}>
+              <Box
+                sx={{
+                  height: { xs: 300, md: 350 },
+                  borderRadius: 2,
+                  overflow: "hidden",
+                }}
+              >
                 <Map deliveries={deliveries} />
               </Box>
             </Paper>
@@ -251,14 +269,36 @@ const DeliveriesDashboard = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={performanceMetrics}>
                     <defs>
-                      <linearGradient id="onTimeGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                      <linearGradient
+                        id="onTimeGradient"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop
+                          offset="5%"
+                          stopColor="#10b981"
+                          stopOpacity={0.3}
+                        />
+                        <stop
+                          offset="95%"
+                          stopColor="#10b981"
+                          stopOpacity={0}
+                        />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                    <XAxis dataKey="name" tick={{ fontSize: 12 }} stroke="#94a3b8" />
-                    <YAxis tick={{ fontSize: 12 }} stroke="#94a3b8" domain={[80, 100]} />
+                    <XAxis
+                      dataKey="name"
+                      tick={{ fontSize: 12 }}
+                      stroke="#94a3b8"
+                    />
+                    <YAxis
+                      tick={{ fontSize: 12 }}
+                      stroke="#94a3b8"
+                      domain={[80, 100]}
+                    />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: "#fff",
@@ -336,7 +376,6 @@ const DeliveriesDashboard = () => {
         </Grid>
       )}
     </Box>
-  );
   );
 };
 
